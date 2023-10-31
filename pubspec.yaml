@@ -1,0 +1,27 @@
+name: senjum_status
+description: A new Flutter project.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.1.4 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_riverpod: 2.4.4
+  riverpod_annotation: 2.2.1
+  flutter_hooks: 0.20.3
+  freezed_annotation: 2.4.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: 3.0.0
+  riverpod_generator: 2.3.3
+  freezed: 2.4.5
+  build_runner: 2.4.6
+
+
+flutter:
+  uses-material-design: true

@@ -1,0 +1,421 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:senjum_status/soldier.dart';
+
+import 'soldier_provider.dart';
+
+class SenjumStatusApp extends ConsumerWidget {
+  const SenjumStatusApp({super.key});
+
+  void growButtonPressed(WidgetRef ref) {
+    final notifier = ref.read(soldierNotifierProvider.notifier);
+    notifier.grow();
+  }
+
+  void initializeButtonPressed(WidgetRef ref) {
+    final notifier = ref.read(soldierNotifierProvider.notifier);
+    notifier.initializeSoldier();
+  }
+
+  void randomButtonPressed(WidgetRef ref) {
+    final notifier = ref.read(soldierNotifierProvider.notifier);
+    notifier.generateRandom();
+  }
+
+  Widget buildHp(Soldier soldier) {
+    return buildStatus('体力', soldier.hp);
+  }
+
+  Widget buildKp(Soldier soldier) {
+    return buildStatus('技量', soldier.kp);
+  }
+
+  Widget buildPw(Soldier soldier) {
+    return buildStatus('戦闘', soldier.pw);
+  }
+
+  Widget buildDf(Soldier soldier) {
+    return buildStatus('防御', soldier.df);
+  }
+
+  Widget buildSpd(Soldier soldier) {
+    return buildStatus('脚力', soldier.spd);
+  }
+
+  Widget buildGrowth(Soldier soldier) {
+    if (soldier.growth <= 0) {
+      return const SizedBox(width: 90);
+    }
+
+    final row = Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        const Text(
+          '成長',
+          strutStyle: StrutStyle(height: 1.5, fontSize: 14),
+          style: TextStyle(
+            color: Colors.white70,
+          ),
+        ),
+        const Text(
+          'あと',
+          style: TextStyle(
+            color: Colors.white70,
+            fontSize: 9,
+          ),
+        ),
+        Text(
+          '${soldier.growth}',
+          strutStyle: const StrutStyle(height: 1.5, fontSize: 14),
+          style: const TextStyle(
+            color: Colors.white70,
+          ),
+        ),
+        const Text(
+          '回',
+          style: TextStyle(
+            color: Colors.white70,
+            fontSize: 9,
+          ),
+        ),
+      ],
+    );
+
+    return Container(
+      width: 80,
+      height: 28,
+      margin: const EdgeInsets.fromLTRB(5, 2, 5, 2),
+      padding: const EdgeInsets.fromLTRB(5, 1, 5, 1),
+      decoration: BoxDecoration(
+        border: Border.all(
+          width: 0.5,
+          color: Colors.yellow,
+        ),
+        color: Colors.brown[800],
+      ),
+      alignment: Alignment.centerLeft,
+      child: row,
+    );
+  }
+
+  Widget buildStatus(String word, int value) {
+    BoxBorder? border;
+    const double borderWidth = 1.5;
+
+    if (value >= 111) {
+      border = Border.all(
+        width: borderWidth,
+        color: Colors.red.withOpacity(0.8),
+      );
+    } else if (value >= 90 || word == '脚力' && value == 6) {
+      border = Border.all(
+        width: borderWidth,
+        color: Colors.red.withOpacity(0.5),
+      );
+    } else if (value >= 80 || word == '脚力' && value == 5) {
+      border = Border.all(
+        width: borderWidth,
+        color: Colors.orange.withOpacity(0.5),
+      );
+    } else if (value >= 70 || word == '脚力' && value == 4) {
+      border = Border.all(
+        width: borderWidth,
+        color: Colors.yellow.withOpacity(0.5),
+      );
+    } else {
+      border = Border(
+        bottom: BorderSide(
+          width: borderWidth,
+          color: Colors.yellow.withOpacity(0.5),
+        ),
+        top: const BorderSide(
+          width: borderWidth,
+          color: Colors.black,
+        ),
+        right: const BorderSide(
+          width: borderWidth,
+          color: Colors.black,
+        ),
+        left: const BorderSide(
+          width: borderWidth,
+          color: Colors.black,
+        ),
+      );
+    }
+    final row = Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Text(
+          word,
+          strutStyle: const StrutStyle(height: 1.5, fontSize: 14),
+          style: const TextStyle(
+            color: Colors.white70,
+          ),
+        ),
+        Text(
+          '$value',
+          strutStyle: const StrutStyle(height: 1.5, fontSize: 14),
+          style: const TextStyle(
+            color: Colors.white70,
+          ),
+        ),
+      ],
+    );
+
+    return Container(
+      width: 80,
+      height: 28,
+      margin: const EdgeInsets.fromLTRB(5, 2, 5, 2),
+      padding: const EdgeInsets.fromLTRB(5, 1, 5, 1),
+      decoration: BoxDecoration(
+        border: border,
+        color: Colors.black,
+      ),
+      alignment: Alignment.centerLeft,
+      child: row,
+    );
+  }
+
+  Widget buildName(soldier) {
+    final nameText = Text(
+      soldier.name,
+      style: const TextStyle(
+        color: Colors.white70,
+        fontSize: 18,
+      ),
+    );
+
+    return Container(
+      margin: const EdgeInsets.fromLTRB(5, 5, 5, 10),
+      child: nameText,
+    );
+  }
+
+  Widget buildRokudaka(Soldier soldier) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.yellow.withOpacity(0.5),
+          width: 1,
+        ),
+        color: Colors.black,
+        borderRadius: BorderRadius.circular(3),
+      ),
+      width: 100,
+      height: 25,
+      padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Text(
+            '禄高',
+            style: TextStyle(color: Colors.white70),
+          ),
+          Text(
+            '${soldier.rokudaka}',
+            style: const TextStyle(color: Colors.white70),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildCharacter(Soldier soldier) {
+    // 兵ごとに決まる兵種を表示
+    final container = Container(
+      width: 38,
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.white.withOpacity(0.3),
+        ),
+      ),
+      child: Container(
+        width: 38,
+        height: 22,
+        padding: const EdgeInsets.fromLTRB(5, 1, 5, 1),
+        decoration: BoxDecoration(
+          border: Border.all(
+            width: 1,
+            color: Colors.black87,
+          ),
+          color: const Color.fromARGB(255, 64, 47, 71),
+        ),
+        child: Text(
+          soldier.character,
+          style: const TextStyle(
+            color: Colors.white70,
+            fontSize: 12,
+          ),
+        ),
+      ),
+    );
+
+    // 兵種
+    return Container(
+      padding: const EdgeInsets.fromLTRB(5, 1, 5, 1),
+      width: 90,
+      height: 30,
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.3),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Text(
+            '兵種',
+            style: TextStyle(color: Colors.white70),
+          ),
+          container,
+        ],
+      ),
+    );
+  }
+
+  Widget buildAction(Soldier soldier) {
+    final textColor = switch (soldier.action) {
+      '槍撃' => Colors.black,
+      '槍術' => Colors.orange,
+      _ => Colors.black,
+    };
+
+    final container = Container(
+      width: 38,
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.white.withOpacity(0.3),
+        ),
+      ),
+      child: Container(
+        width: 38,
+        height: 22,
+        padding: const EdgeInsets.fromLTRB(5, 1, 5, 1),
+        decoration: BoxDecoration(
+          border: Border.all(
+            width: 1,
+            color: Colors.black87,
+          ),
+          color: textColor,
+        ),
+        child: Text(
+          soldier.action,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 12,
+            shadows: [
+              Shadow(
+                offset: Offset(1, 1),
+                blurRadius: 2.0,
+                color: Colors.black,
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+
+    return Container(
+      padding: const EdgeInsets.fromLTRB(5, 1, 5, 1),
+      width: 90,
+      height: 30,
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.3),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Text(
+            '技種',
+            style: TextStyle(
+              color: Colors.white70,
+            ),
+          ),
+          container,
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final soldier = ref.watch(soldierNotifierProvider);
+
+    final growButton = ElevatedButton(
+      onPressed: soldier.growth < 1 ? null : () => growButtonPressed(ref),
+      child: const Text('成長'),
+    );
+
+    final randomGenerateButton = ElevatedButton(
+      onPressed: () => randomButtonPressed(ref),
+      child: const Text('生成'),
+    );
+
+    final initializeButton = ElevatedButton(
+      onPressed: () => initializeButtonPressed(ref),
+      child: const Text('初期化'),
+    );
+
+    // ステータスは4行で構成
+    final soldierContainer = Container(
+      width: 350,
+      padding: const EdgeInsets.all(5),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              buildName(soldier),
+              buildRokudaka(soldier),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              buildCharacter(soldier),
+              buildAction(soldier),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              buildHp(soldier),
+              buildKp(soldier),
+              buildSpd(soldier),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              buildPw(soldier),
+              buildDf(soldier),
+              buildGrowth(soldier),
+            ],
+          ),
+        ],
+      ),
+    );
+
+    final buttons = Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        randomGenerateButton,
+        growButton,
+        initializeButton,
+      ],
+    );
+
+    return Scaffold(
+      body: Container(
+        color: Colors.black,
+        child: Column(
+          children: [
+            soldierContainer,
+            const SizedBox(height: 10),
+            buttons,
+          ],
+        ),
+      ),
+    );
+  }
+}
