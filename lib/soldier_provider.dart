@@ -5,6 +5,8 @@ import 'package:senjum_status/soldier.dart';
 
 part 'soldier_provider.g.dart';
 
+final random = Random();
+
 @riverpod
 class SoldierNotifier extends _$SoldierNotifier {
   @override
@@ -52,8 +54,6 @@ class SoldierNotifier extends _$SoldierNotifier {
       rokudaka: calcRokudaka(newSoldier),
     );
   }
-
-  final random = Random();
 
   void grow() {
     if (state.growth < 1) {

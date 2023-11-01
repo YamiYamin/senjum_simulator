@@ -223,70 +223,59 @@ class SenjumStatusApp extends ConsumerWidget {
   }
 
   Widget buildCharacter(Soldier soldier) {
-    // 兵ごとに決まる兵種を表示
-    final container = Container(
-      width: 38,
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: Colors.white.withOpacity(0.3),
-        ),
-      ),
-      child: Container(
-        width: 38,
-        height: 22,
-        padding: const EdgeInsets.fromLTRB(5, 1, 5, 1),
-        decoration: BoxDecoration(
-          border: Border.all(
-            width: 1,
-            color: Colors.black87,
-          ),
-          color: const Color.fromARGB(255, 64, 47, 71),
-        ),
-        child: Text(
-          soldier.character,
-          style: const TextStyle(
-            color: Colors.white70,
-            fontSize: 12,
-          ),
-        ),
-      ),
-    );
-
     // 兵種
-    return Container(
-      padding: const EdgeInsets.fromLTRB(5, 1, 5, 1),
-      width: 90,
-      height: 30,
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.3),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Text(
-            '兵種',
-            style: TextStyle(color: Colors.white70),
-          ),
-          container,
-        ],
+    return buildAbilityBack(
+      word: '兵種',
+      child: buildAbility(
+        soldier.character,
+        const Color.fromARGB(255, 64, 47, 71),
       ),
     );
   }
 
   Widget buildAction(Soldier soldier) {
-    final textColor = switch (soldier.action) {
+    final color = switch (soldier.action) {
       '槍撃' => Colors.black,
-      '槍術' => Colors.orange,
+      '槍術' => const Color.fromARGB(255, 210, 109, 0),
       _ => Colors.black,
     };
 
-    final container = Container(
-      width: 38,
+    return buildAbilityBack(
+      word: '技種',
+      child: buildAbility(
+        soldier.action,
+        color,
+      ),
+    );
+  }
+
+  Widget buildAbility(String word, Color color) {
+    final text = Text(
+      word,
+      style: const TextStyle(
+        color: Colors.white70,
+        fontSize: 12,
+        shadows: [
+          Shadow(
+            offset: Offset(1, 1),
+            blurRadius: 1.0,
+            color: Colors.black,
+          ),
+        ],
+      ),
+    );
+
+    // 外枠(白)
+    return Container(
+      width: 40,
+      height: 24,
+      alignment: Alignment.center,
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.white.withOpacity(0.3),
         ),
       ),
+      // 内枠（黒）
       child: Container(
         width: 38,
         height: 22,
@@ -296,25 +285,15 @@ class SenjumStatusApp extends ConsumerWidget {
             width: 1,
             color: Colors.black87,
           ),
-          color: textColor,
+          color: color,
         ),
-        child: Text(
-          soldier.action,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 12,
-            shadows: [
-              Shadow(
-                offset: Offset(1, 1),
-                blurRadius: 2.0,
-                color: Colors.black,
-              )
-            ],
-          ),
-        ),
+        child: text,
       ),
     );
+  }
 
+  // 兵種・技種の背景
+  Widget buildAbilityBack({required String word, required Widget child}) {
     return Container(
       padding: const EdgeInsets.fromLTRB(5, 1, 5, 1),
       width: 90,
@@ -325,13 +304,13 @@ class SenjumStatusApp extends ConsumerWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
-            '技種',
-            style: TextStyle(
+          Text(
+            word,
+            style: const TextStyle(
               color: Colors.white70,
             ),
           ),
-          container,
+          child,
         ],
       ),
     );
