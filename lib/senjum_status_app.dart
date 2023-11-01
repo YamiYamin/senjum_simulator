@@ -408,6 +408,12 @@ class SenjumStatusApp extends ConsumerWidget {
         initializeButton,
       ],
     );
+    final abilities = Text(
+      soldier.abilities.toString(),
+      style: const TextStyle(
+        color: Colors.white70,
+      ),
+    );
 
     return Scaffold(
       body: Container(
@@ -416,6 +422,7 @@ class SenjumStatusApp extends ConsumerWidget {
           children: [
             soldierContainer,
             const SizedBox(height: 10),
+            abilities,
             buttons,
           ],
         ),

@@ -15,5 +15,6 @@ class Soldier with _$Soldier {
     required int df,
     required int spd,
     required int growth,
+    required List<int> abilities,
   }) = _Soldier;
 }

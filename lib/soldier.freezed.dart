@@ -26,6 +26,7 @@ mixin _$Soldier {
   int get df => throw _privateConstructorUsedError;
   int get spd => throw _privateConstructorUsedError;
   int get growth => throw _privateConstructorUsedError;
+  List<int> get abilities => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SoldierCopyWith<Soldier> get copyWith => throw _privateConstructorUsedError;
@@ -46,7 +47,8 @@ abstract class $SoldierCopyWith<$Res> {
       int pw,
       int df,
       int spd,
-      int growth});
+      int growth,
+      List<int> abilities});
 }
 
 /// @nodoc
@@ -72,6 +74,7 @@ class _$SoldierCopyWithImpl<$Res, $Val extends Soldier>
     Object? df = null,
     Object? spd = null,
     Object? growth = null,
+    Object? abilities = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -114,6 +117,10 @@ class _$SoldierCopyWithImpl<$Res, $Val extends Soldier>
           ? _value.growth
           : growth // ignore: cast_nullable_to_non_nullable
               as int,
+      abilities: null == abilities
+          ? _value.abilities
+          : abilities // ignore: cast_nullable_to_non_nullable
+              as List<int>,
     ) as $Val);
   }
 }
@@ -135,7 +142,8 @@ abstract class _$$SoldierImplCopyWith<$Res> implements $SoldierCopyWith<$Res> {
       int pw,
       int df,
       int spd,
-      int growth});
+      int growth,
+      List<int> abilities});
 }
 
 /// @nodoc
@@ -159,6 +167,7 @@ class __$$SoldierImplCopyWithImpl<$Res>
     Object? df = null,
     Object? spd = null,
     Object? growth = null,
+    Object? abilities = null,
   }) {
     return _then(_$SoldierImpl(
       name: null == name
@@ -201,6 +210,10 @@ class __$$SoldierImplCopyWithImpl<$Res>
           ? _value.growth
           : growth // ignore: cast_nullable_to_non_nullable
               as int,
+      abilities: null == abilities
+          ? _value._abilities
+          : abilities // ignore: cast_nullable_to_non_nullable
+              as List<int>,
     ));
   }
 }
@@ -218,7 +231,9 @@ class _$SoldierImpl implements _Soldier {
       required this.pw,
       required this.df,
       required this.spd,
-      required this.growth});
+      required this.growth,
+      required final List<int> abilities})
+      : _abilities = abilities;
 
   @override
   final String name;
@@ -240,10 +255,17 @@ class _$SoldierImpl implements _Soldier {
   final int spd;
   @override
   final int growth;
+  final List<int> _abilities;
+  @override
+  List<int> get abilities {
+    if (_abilities is EqualUnmodifiableListView) return _abilities;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_abilities);
+  }
 
   @override
   String toString() {
-    return 'Soldier(name: $name, rokudaka: $rokudaka, character: $character, action: $action, hp: $hp, kp: $kp, pw: $pw, df: $df, spd: $spd, growth: $growth)';
+    return 'Soldier(name: $name, rokudaka: $rokudaka, character: $character, action: $action, hp: $hp, kp: $kp, pw: $pw, df: $df, spd: $spd, growth: $growth, abilities: $abilities)';
   }
 
   @override
@@ -262,12 +284,25 @@ class _$SoldierImpl implements _Soldier {
             (identical(other.pw, pw) || other.pw == pw) &&
             (identical(other.df, df) || other.df == df) &&
             (identical(other.spd, spd) || other.spd == spd) &&
-            (identical(other.growth, growth) || other.growth == growth));
+            (identical(other.growth, growth) || other.growth == growth) &&
+            const DeepCollectionEquality()
+                .equals(other._abilities, _abilities));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, name, rokudaka, character,
-      action, hp, kp, pw, df, spd, growth);
+  int get hashCode => Object.hash(
+      runtimeType,
+      name,
+      rokudaka,
+      character,
+      action,
+      hp,
+      kp,
+      pw,
+      df,
+      spd,
+      growth,
+      const DeepCollectionEquality().hash(_abilities));
 
   @JsonKey(ignore: true)
   @override
@@ -287,7 +322,8 @@ abstract class _Soldier implements Soldier {
       required final int pw,
       required final int df,
       required final int spd,
-      required final int growth}) = _$SoldierImpl;
+      required final int growth,
+      required final List<int> abilities}) = _$SoldierImpl;
 
   @override
   String get name;
@@ -309,6 +345,8 @@ abstract class _Soldier implements Soldier {
   int get spd;
   @override
   int get growth;
+  @override
+  List<int> get abilities;
   @override
   @JsonKey(ignore: true)
   _$$SoldierImplCopyWith<_$SoldierImpl> get copyWith =>

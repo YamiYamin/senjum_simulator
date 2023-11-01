@@ -12,17 +12,17 @@ class SoldierNotifier extends _$SoldierNotifier {
   @override
   Soldier build() {
     return const Soldier(
-      name: '弁慶',
-      rokudaka: 0,
-      character: '足軽',
-      action: '槍術',
-      hp: 0,
-      kp: 0,
-      pw: 0,
-      df: 0,
-      spd: 0,
-      growth: 9,
-    );
+        name: '弁慶',
+        rokudaka: 0,
+        character: '足軽',
+        action: '槍術',
+        hp: 0,
+        kp: 0,
+        pw: 0,
+        df: 0,
+        spd: 0,
+        growth: 9,
+        abilities: <int>[]);
   }
 
   void generateRandom() {
@@ -37,6 +37,18 @@ class SoldierNotifier extends _$SoldierNotifier {
       _ => ''
     };
 
+    final abilities = List<int>.filled(25, 0);
+
+    // 特殊能力の有無を決定する
+    for (int i = 6; i < 26; i++) {
+      if (i == 8 || i == 9 || i == 12 || i == 13 || i == 14) {
+        abilities[i] = random.nextDouble() * 100 > 95 ? 1 : 0;
+      }
+      if (i >= 22) continue;
+
+      abilities[i] = random.nextDouble() * 100 > 80 ? 1 : 0;
+    }
+
     final newSoldier = Soldier(
       name: '弁慶',
       rokudaka: 0,
@@ -48,6 +60,7 @@ class SoldierNotifier extends _$SoldierNotifier {
       df: random.nextInt(110) + 1,
       spd: random.nextInt(3) + 2,
       growth: 9,
+      abilities: abilities,
     );
 
     state = newSoldier.copyWith(
