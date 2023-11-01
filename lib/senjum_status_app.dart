@@ -235,8 +235,33 @@ class SenjumStatusApp extends ConsumerWidget {
 
   Widget buildAction(Soldier soldier) {
     final color = switch (soldier.action) {
-      '槍撃' => Colors.black,
-      '槍術' => const Color.fromARGB(255, 210, 109, 0),
+      '槍撃' || '弓矢' || '火遊' => Colors.black,
+      '号令' || '火攻' || '旋風' => const Color.fromARGB(255, 98, 77, 24),
+      '火矢' ||
+      '射撃' ||
+      '火計' ||
+      '虚報' ||
+      '忍術' =>
+        const Color.fromARGB(255, 132, 55, 46),
+      '槍術' ||
+      '遠射' ||
+      '焙烙' ||
+      '業火' ||
+      '狙撃' ||
+      '無双' ||
+      '影走' =>
+        const Color.fromARGB(255, 210, 109, 0),
+      '豪傑' ||
+      '治癒' ||
+      '妖術' ||
+      '炎術' ||
+      '砲撃' ||
+      '鬼神' ||
+      '結界' ||
+      '幻術' ||
+      '騎突' ||
+      '奮迅' =>
+        const Color.fromARGB(255, 255, 71, 22),
       _ => Colors.black,
     };
 
