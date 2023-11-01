@@ -22,7 +22,7 @@ class SoldierNotifier extends _$SoldierNotifier {
         df: 0,
         spd: 0,
         growth: 9,
-        abilities: <int>[]);
+        abilities: {});
   }
 
   void generateRandom() {
@@ -34,20 +34,58 @@ class SoldierNotifier extends _$SoldierNotifier {
 
     final action = switch (character) {
       '足軽' => random.nextDouble() * 100 > 99.5 ? '槍術' : '槍撃',
+      '騎馬' => '騎突',
       _ => ''
     };
 
-    final abilities = List<int>.filled(25, 0);
+    final abilities = <String, bool>{
+      '突撃': false,
+      '守備': false,
+      '迎撃': false,
+      '乱戦': false,
+      '待機': false,
+      '突進': false,
+      '攻略': false,
+      '膂力': false,
+      '連発': false,
+      '鉄壁': false,
+      '見切': false,
+      '討取': false,
+      '奮起': false,
+      '鼓舞': false,
+      '回復': false,
+      '治療': false,
+      '療所': false,
+      '仕掛': false,
+      '堅陣': false,
+      '母衣': false,
+      '逃足': false,
+      '火遁': false,
+      '忍狩': false,
+      '猛退': false,
+      '陣頭': false,
+    };
 
-    // 特殊能力の有無を決定する
-    for (int i = 6; i < 26; i++) {
-      if (i == 8 || i == 9 || i == 12 || i == 13 || i == 14) {
-        abilities[i] = random.nextDouble() * 100 > 95 ? 1 : 0;
+    abilities.forEach((key, _) {
+      if (key == '膂力' ||
+          key == '連発' ||
+          key == '討取' ||
+          key == '鼓舞' ||
+          key == '奮起') {
+        abilities[key] = random.nextDouble() * 100 > 95;
       }
-      if (i >= 22) continue;
+    });
 
-      abilities[i] = random.nextDouble() * 100 > 80 ? 1 : 0;
-    }
+    // final abilities = List<int>.filled(25, 0);
+
+    // for (int i = 6; i < 26; i++) {
+    //   if (i == 8 || i == 9 || i == 12 || i == 13 || i == 14) {
+    //     abilities[i] = random.nextDouble() * 100 > 95 ? 1 : 0;
+    //   }
+    //   if (i >= 22) continue;
+
+    //   abilities[i] = random.nextDouble() * 100 > 80 ? 1 : 0;
+    // }
 
     final newSoldier = Soldier(
       name: '弁慶',

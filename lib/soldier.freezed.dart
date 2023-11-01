@@ -26,7 +26,7 @@ mixin _$Soldier {
   int get df => throw _privateConstructorUsedError;
   int get spd => throw _privateConstructorUsedError;
   int get growth => throw _privateConstructorUsedError;
-  List<int> get abilities => throw _privateConstructorUsedError;
+  Map<String, bool> get abilities => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SoldierCopyWith<Soldier> get copyWith => throw _privateConstructorUsedError;
@@ -48,7 +48,7 @@ abstract class $SoldierCopyWith<$Res> {
       int df,
       int spd,
       int growth,
-      List<int> abilities});
+      Map<String, bool> abilities});
 }
 
 /// @nodoc
@@ -120,7 +120,7 @@ class _$SoldierCopyWithImpl<$Res, $Val extends Soldier>
       abilities: null == abilities
           ? _value.abilities
           : abilities // ignore: cast_nullable_to_non_nullable
-              as List<int>,
+              as Map<String, bool>,
     ) as $Val);
   }
 }
@@ -143,7 +143,7 @@ abstract class _$$SoldierImplCopyWith<$Res> implements $SoldierCopyWith<$Res> {
       int df,
       int spd,
       int growth,
-      List<int> abilities});
+      Map<String, bool> abilities});
 }
 
 /// @nodoc
@@ -213,7 +213,7 @@ class __$$SoldierImplCopyWithImpl<$Res>
       abilities: null == abilities
           ? _value._abilities
           : abilities // ignore: cast_nullable_to_non_nullable
-              as List<int>,
+              as Map<String, bool>,
     ));
   }
 }
@@ -232,7 +232,7 @@ class _$SoldierImpl implements _Soldier {
       required this.df,
       required this.spd,
       required this.growth,
-      required final List<int> abilities})
+      required final Map<String, bool> abilities})
       : _abilities = abilities;
 
   @override
@@ -255,12 +255,12 @@ class _$SoldierImpl implements _Soldier {
   final int spd;
   @override
   final int growth;
-  final List<int> _abilities;
+  final Map<String, bool> _abilities;
   @override
-  List<int> get abilities {
-    if (_abilities is EqualUnmodifiableListView) return _abilities;
+  Map<String, bool> get abilities {
+    if (_abilities is EqualUnmodifiableMapView) return _abilities;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_abilities);
+    return EqualUnmodifiableMapView(_abilities);
   }
 
   @override
@@ -323,7 +323,7 @@ abstract class _Soldier implements Soldier {
       required final int df,
       required final int spd,
       required final int growth,
-      required final List<int> abilities}) = _$SoldierImpl;
+      required final Map<String, bool> abilities}) = _$SoldierImpl;
 
   @override
   String get name;
@@ -346,7 +346,7 @@ abstract class _Soldier implements Soldier {
   @override
   int get growth;
   @override
-  List<int> get abilities;
+  Map<String, bool> get abilities;
   @override
   @JsonKey(ignore: true)
   _$$SoldierImplCopyWith<_$SoldierImpl> get copyWith =>
