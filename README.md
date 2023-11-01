@@ -1,3 +1,3 @@
-# senjum_status
+# 戦じゃんシミュレーター
 
-A new Flutter project.
+戦国じゃんぶるのシミュレーター（非公式）です。
