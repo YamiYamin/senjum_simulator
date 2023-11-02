@@ -341,10 +341,6 @@ class SenjumStatusApp extends ConsumerWidget {
     );
   }
 
-  Widget buildStrategies(Soldier soldier) {
-    return const Placeholder();
-  }
-
   Widget buildTopLabel(String data) {
     return Container(
       height: 24,
@@ -357,6 +353,43 @@ class SenjumStatusApp extends ConsumerWidget {
           fontSize: 13,
         ),
       ),
+    );
+  }
+
+  Widget buildStrategies(Soldier soldier) {
+    final keys = soldier.strategies.keys;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        buildTopLabel('作戦行動'),
+        Container(
+          margin: const EdgeInsets.only(
+            left: 5,
+            right: 5,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: 280,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    for (int i = 0; i < 5; i++) ...{
+                      soldier.strategies[keys.elementAt(i)]!
+                          ? buildAbility(keys.elementAt(i),
+                              const Color.fromARGB(255, 170, 126, 50))
+                          : buildAbility(keys.elementAt(i), Colors.black),
+                    },
+                    buildAbility('？？', Colors.black),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -497,6 +530,7 @@ class SenjumStatusApp extends ConsumerWidget {
               buildGrowth(soldier),
             ],
           ),
+          buildStrategies(soldier),
           buildAbilities(soldier),
         ],
       ),
