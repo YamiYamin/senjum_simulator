@@ -341,6 +341,104 @@ class SenjumStatusApp extends ConsumerWidget {
     );
   }
 
+  Widget buildStrategies(Soldier soldier) {
+    return const Placeholder();
+  }
+
+  Widget buildTopLabel(String data) {
+    return Container(
+      height: 24,
+      margin: const EdgeInsets.only(top: 5),
+      padding: const EdgeInsets.fromLTRB(5, 1, 5, 1),
+      child: Text(
+        data,
+        style: const TextStyle(
+          color: Colors.white70,
+          fontSize: 13,
+        ),
+      ),
+    );
+  }
+
+  Widget buildAbilities(Soldier soldier) {
+    final keys = soldier.abilities.keys;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        buildTopLabel('特殊能力'),
+        Container(
+          margin: const EdgeInsets.only(
+            left: 5,
+            right: 5,
+          ),
+          height: 86,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: 280,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    for (int i = 0; i < 6; i++) ...{
+                      soldier.abilities[keys.elementAt(i)]!
+                          ? buildAbility(keys.elementAt(i),
+                              const Color.fromARGB(255, 170, 126, 50))
+                          : buildAbility(keys.elementAt(i), Colors.black),
+                    }
+                  ],
+                ),
+              ),
+              SizedBox(
+                width: 280,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    for (int i = 6; i < 12; i++) ...{
+                      soldier.abilities[keys.elementAt(i)]!
+                          ? buildAbility(keys.elementAt(i),
+                              const Color.fromARGB(255, 170, 126, 50))
+                          : buildAbility(keys.elementAt(i), Colors.black),
+                    }
+                  ],
+                ),
+              ),
+              SizedBox(
+                width: 280,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    for (int i = 12; i < 16; i++) ...{
+                      soldier.abilities[keys.elementAt(i)]!
+                          ? buildAbility(keys.elementAt(i),
+                              const Color.fromARGB(255, 170, 126, 50))
+                          : buildAbility(keys.elementAt(i), Colors.black),
+                    },
+                    soldier.character == '猛者' &&
+                            soldier.abilities[keys.elementAt(16)]!
+                        ? buildAbility(keys.elementAt(16), Colors.red)
+                        : soldier.character == '忍者' &&
+                                soldier.abilities[keys.elementAt(17)]!
+                            ? buildAbility(keys.elementAt(17), Colors.red)
+                            : soldier.character == '騎馬' &&
+                                    soldier.abilities[keys.elementAt(18)]!
+                                ? buildAbility(keys.elementAt(18), Colors.red)
+                                : buildAbility('？？', Colors.black),
+                    soldier.character == '騎馬' &&
+                            soldier.abilities[keys.elementAt(19)]!
+                        ? buildAbility(keys.elementAt(19), Colors.red)
+                        : buildAbility('？？', Colors.black)
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final soldier = ref.watch(soldierNotifierProvider);
@@ -373,12 +471,15 @@ class SenjumStatusApp extends ConsumerWidget {
               buildRokudaka(soldier),
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              buildCharacter(soldier),
-              buildAction(soldier),
-            ],
+          Container(
+            margin: const EdgeInsets.only(bottom: 4),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                buildCharacter(soldier),
+                buildAction(soldier),
+              ],
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -396,6 +497,7 @@ class SenjumStatusApp extends ConsumerWidget {
               buildGrowth(soldier),
             ],
           ),
+          buildAbilities(soldier),
         ],
       ),
     );
@@ -409,77 +511,12 @@ class SenjumStatusApp extends ConsumerWidget {
       ],
     );
 
-    final keys = soldier.abilities.keys;
-
-    final abilityRows = SizedBox(
-      height: 80,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SizedBox(
-            width: 280,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                for (int i = 0; i < 6; i++) ...{
-                  soldier.abilities[keys.elementAt(i)]!
-                      ? buildAbility(keys.elementAt(i), Colors.yellow)
-                      : buildAbility(keys.elementAt(i), Colors.black),
-                }
-              ],
-            ),
-          ),
-          SizedBox(
-            width: 280,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                for (int i = 6; i < 12; i++) ...{
-                  soldier.abilities[keys.elementAt(i)]!
-                      ? buildAbility(keys.elementAt(i), Colors.yellow)
-                      : buildAbility(keys.elementAt(i), Colors.black),
-                }
-              ],
-            ),
-          ),
-          SizedBox(
-            width: 280,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                for (int i = 12; i < 16; i++) ...{
-                  soldier.abilities[keys.elementAt(i)]!
-                      ? buildAbility(keys.elementAt(i), Colors.yellow)
-                      : buildAbility(keys.elementAt(i), Colors.black),
-                },
-                soldier.character == '猛者' &&
-                        soldier.abilities[keys.elementAt(16)]!
-                    ? buildAbility(keys.elementAt(16), Colors.red)
-                    : soldier.character == '忍者' &&
-                            soldier.abilities[keys.elementAt(17)]!
-                        ? buildAbility(keys.elementAt(17), Colors.red)
-                        : soldier.character == '騎馬' &&
-                                soldier.abilities[keys.elementAt(18)]!
-                            ? buildAbility(keys.elementAt(18), Colors.red)
-                            : buildAbility('？？', Colors.black),
-                soldier.character == '騎馬' &&
-                        soldier.abilities[keys.elementAt(19)]!
-                    ? buildAbility(keys.elementAt(19), Colors.red)
-                    : buildAbility('？？', Colors.black)
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-
     return Scaffold(
       body: Container(
         color: Colors.black,
         child: Column(
           children: [
             soldierContainer,
-            abilityRows,
             const SizedBox(height: 10),
             buttons,
           ],
