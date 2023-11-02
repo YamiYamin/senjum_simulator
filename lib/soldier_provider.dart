@@ -181,13 +181,60 @@ class SoldierNotifier extends _$SoldierNotifier {
     );
   }
 
-  int calcRokudaka(Soldier soldier) {
+  static int calcRokudaka(Soldier soldier) {
     int rokudaka = (pow(soldier.hp, 3) / 2500 +
             pow(soldier.kp, 3) / 2200 +
             pow(soldier.pw, 3) / 2000 +
             pow(soldier.df, 3) / 3000 +
             pow(soldier.spd, 3) * 2)
         .floor();
+
+    const rokudakaOfStrategies = <String, int>{
+      '突撃': 10,
+      '守備': 10,
+      '迎撃': 10,
+      '乱戦': 5,
+      '待機': 5,
+    };
+
+    soldier.strategies.forEach((key, value) {
+      if (value) {
+        rokudaka += rokudakaOfStrategies[key]!;
+      }
+    });
+
+    const rokudakaOfAbilities = <String, int>{
+      '突進': 20,
+      '攻略': 20,
+      '膂力': 300,
+      '連発': 350,
+      '鉄壁': 10,
+      '見切': 20,
+      '討取': 10,
+      '奮起': 20,
+      '鼓舞': 120,
+      '回復': 20,
+      '治療': 30,
+      '療所': 30,
+      '仕掛': 10,
+      '堅陣': 30,
+      '母衣': 10,
+      '逃足': 10,
+      '忍狩': 700,
+      '火遁': 1200,
+      '猛退': 1000,
+      '陣頭': 2000,
+    };
+
+    soldier.abilities.forEach((key, value) {
+      if (value) {
+        rokudaka += rokudakaOfAbilities[key]!;
+      }
+    });
+
+    if (soldier.character == '槍撃' || soldier.character == '弓兵') {
+      rokudaka = (rokudaka * 0.7).floor();
+    }
 
     if (rokudaka > 9999) {
       rokudaka = 9999;
