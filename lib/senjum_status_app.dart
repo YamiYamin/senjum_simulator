@@ -408,10 +408,68 @@ class SenjumStatusApp extends ConsumerWidget {
         initializeButton,
       ],
     );
-    final abilities = Text(
-      soldier.abilities.toString(),
-      style: const TextStyle(
-        color: Colors.white70,
+
+    final keys = soldier.abilities.keys;
+
+    final abilityRows = SizedBox(
+      height: 80,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SizedBox(
+            width: 280,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                for (int i = 0; i < 6; i++) ...{
+                  soldier.abilities[keys.elementAt(i)]!
+                      ? buildAbility(keys.elementAt(i), Colors.yellow)
+                      : buildAbility(keys.elementAt(i), Colors.black),
+                }
+              ],
+            ),
+          ),
+          SizedBox(
+            width: 280,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                for (int i = 6; i < 12; i++) ...{
+                  soldier.abilities[keys.elementAt(i)]!
+                      ? buildAbility(keys.elementAt(i), Colors.yellow)
+                      : buildAbility(keys.elementAt(i), Colors.black),
+                }
+              ],
+            ),
+          ),
+          SizedBox(
+            width: 280,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                for (int i = 12; i < 16; i++) ...{
+                  soldier.abilities[keys.elementAt(i)]!
+                      ? buildAbility(keys.elementAt(i), Colors.yellow)
+                      : buildAbility(keys.elementAt(i), Colors.black),
+                },
+                soldier.character == '猛者' &&
+                        soldier.abilities[keys.elementAt(16)]!
+                    ? buildAbility(keys.elementAt(16), Colors.red)
+                    : soldier.character == '忍者' &&
+                            soldier.abilities[keys.elementAt(17)]!
+                        ? buildAbility(keys.elementAt(17), Colors.red)
+                        : soldier.character == '騎馬' &&
+                                soldier.abilities[keys.elementAt(18)]!
+                            ? buildAbility(keys.elementAt(18), Colors.red)
+                            : buildAbility('？？', Colors.black),
+                soldier.character == '騎馬' &&
+                        soldier.abilities[keys.elementAt(19)]!
+                    ? buildAbility(keys.elementAt(19), Colors.red)
+                    : buildAbility('？？', Colors.black)
+              ],
+            ),
+          ),
+        ],
       ),
     );
 
@@ -421,8 +479,8 @@ class SenjumStatusApp extends ConsumerWidget {
         child: Column(
           children: [
             soldierContainer,
+            abilityRows,
             const SizedBox(height: 10),
-            abilities,
             buttons,
           ],
         ),
