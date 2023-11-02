@@ -22,6 +22,7 @@ class SoldierNotifier extends _$SoldierNotifier {
         df: 0,
         spd: 0,
         growth: 9,
+        strategies: {},
         abilities: {});
   }
 
@@ -38,12 +39,15 @@ class SoldierNotifier extends _$SoldierNotifier {
       _ => ''
     };
 
-    final abilities = <String, bool>{
+    final strategies = <String, bool>{
       '突撃': false,
       '守備': false,
       '迎撃': false,
       '乱戦': false,
       '待機': false,
+    };
+
+    final abilities = <String, bool>{
       '突進': false,
       '攻略': false,
       '膂力': false,
@@ -73,19 +77,13 @@ class SoldierNotifier extends _$SoldierNotifier {
           key == '鼓舞' ||
           key == '奮起') {
         abilities[key] = random.nextDouble() * 100 > 95;
+        return;
       }
+      if (key == '火遁' || key == '忍狩' || key == '猛退' || key == '陣頭') {
+        return;
+      }
+      abilities[key] = random.nextDouble() * 100 > 80;
     });
-
-    // final abilities = List<int>.filled(25, 0);
-
-    // for (int i = 6; i < 26; i++) {
-    //   if (i == 8 || i == 9 || i == 12 || i == 13 || i == 14) {
-    //     abilities[i] = random.nextDouble() * 100 > 95 ? 1 : 0;
-    //   }
-    //   if (i >= 22) continue;
-
-    //   abilities[i] = random.nextDouble() * 100 > 80 ? 1 : 0;
-    // }
 
     final newSoldier = Soldier(
       name: '弁慶',
@@ -99,6 +97,7 @@ class SoldierNotifier extends _$SoldierNotifier {
       spd: random.nextInt(3) + 2,
       growth: 9,
       abilities: abilities,
+      strategies: strategies,
     );
 
     state = newSoldier.copyWith(
