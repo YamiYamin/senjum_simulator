@@ -61,12 +61,6 @@ class SoldierNotifier extends _$SoldierNotifier {
       _ => '',
     };
 
-    final action = switch (character) {
-      '足軽' => random.nextDouble() * 100 > 99.5 ? '槍術' : '槍撃',
-      '騎馬' => '騎突',
-      _ => ''
-    };
-
     final strategies = <String, bool>{
       '突撃': false,
       '守備': false,
@@ -74,6 +68,416 @@ class SoldierNotifier extends _$SoldierNotifier {
       '乱戦': false,
       '待機': false,
     };
+
+    String action = '';
+    int hp = 0;
+    int kp = 0;
+    int pw = 0;
+    int df = 0;
+    int spd = 0;
+
+    switch (character) {
+      case '足軽':
+        action = random.nextDouble() * 100 > 99.5 ? '槍術' : '槍撃';
+        spd = (random.nextDouble() * 3).floor() + 2;
+
+        hp = 30 + (random.nextDouble() * 20).floor();
+        kp = 30 + (random.nextDouble() * 20).floor();
+        pw = 40 + (random.nextDouble() * 20).floor();
+        df = 30 + (random.nextDouble() * 20).floor();
+
+        if (random.nextDouble() * 100 > 60) {
+          hp += (random.nextDouble() * 25).floor();
+          kp += (random.nextDouble() * 30).floor();
+          pw += (random.nextDouble() * 30).floor();
+          df += (random.nextDouble() * 25).floor();
+
+          if (random.nextDouble() * 100 > 70) {
+            hp += (random.nextDouble() * 5).floor();
+            kp += (random.nextDouble() * 20).floor();
+            pw += (random.nextDouble() * 20).floor();
+            df += (random.nextDouble() * 10).floor();
+
+            if (random.nextDouble() * 100 > 70) {
+              hp += (random.nextDouble() * 15).floor();
+              df += (random.nextDouble() * 15).floor();
+            }
+          }
+        }
+
+        if (random.nextDouble() * 100 > 50) {
+          strategies['突撃'] = true;
+        }
+        if (random.nextDouble() * 100 > 50 || !strategies['突撃']!) {
+          strategies['守備'] = true;
+        }
+        if (random.nextDouble() * 100 > 65) {
+          strategies['迎撃'] = true;
+        }
+        if (random.nextDouble() * 100 > 95) {
+          strategies['乱戦'] = true;
+        }
+        if (random.nextDouble() * 100 > 80) {
+          strategies['待機'] = true;
+        }
+        break;
+      case '弓矢':
+        action = '弓矢';
+        if (random.nextDouble() * 300 > 287) {
+          // 1.82%
+          if (random.nextDouble() * 100 > 30) {
+            action = '火矢';
+            // 0.78%
+          } else {
+            action = '焙烙';
+          }
+        }
+        spd = (random.nextDouble() * 3).floor() + 2;
+
+        hp = 30 + (random.nextDouble() * 20).floor();
+        kp = 30 + (random.nextDouble() * 20).floor();
+        pw = 20 + (random.nextDouble() * 20).floor();
+        df = 20 + (random.nextDouble() * 20).floor();
+
+        // 火矢や焙烙だった兵もこのifを抜けると弓矢か遠射になる
+        // 77.4%で弓矢、20%で遠射
+        if (random.nextDouble() * 100 > 60) {
+          action = random.nextBool() ? '弓矢' : '遠射';
+          hp += (random.nextDouble() * 30).floor();
+          kp += (random.nextDouble() * 30).floor();
+          pw += (random.nextDouble() * 20).floor();
+          df += (random.nextDouble() * 30).floor();
+
+          if (random.nextDouble() * 100 > 90) {
+            pw += (random.nextDouble() * 20).floor();
+
+            if (random.nextDouble() * 100 > 95) {
+              pw += (random.nextDouble() * 80).floor();
+            }
+
+            hp += (random.nextDouble() * 20).floor();
+            kp += (random.nextDouble() * 20).floor();
+            df += (random.nextDouble() * 20).floor();
+          }
+        }
+
+        if (random.nextDouble() * 100 > 50) {
+          strategies['突撃'] = true;
+        }
+        if (random.nextDouble() * 100 > 40 || !strategies['突撃']!) {
+          strategies['守備'] = true;
+        }
+        if (random.nextDouble() * 100 > 65) {
+          strategies['迎撃'] = true;
+        }
+        if (random.nextDouble() * 100 > 95) {
+          strategies['乱戦'] = true;
+        }
+        if (random.nextDouble() * 100 > 30 || strategies['守備']!) {
+          strategies['待機'] = true;
+        }
+        break;
+      case '武将':
+        //
+        action = '号令';
+
+        // 0.5%
+        if (random.nextDouble() * 400 > 398) {
+          action = '豪傑';
+        }
+        // 0.11...%
+        if (random.nextDouble() * 1800 > 1798) {
+          action = '治癒';
+        }
+        spd = (random.nextDouble() * 3).floor() + 2;
+        hp = 30 + (random.nextDouble() * 20).floor();
+        kp = 30 + (random.nextDouble() * 20).floor();
+        pw = 30 + (random.nextDouble() * 20).floor();
+        df = 65 + (random.nextDouble() * 15).floor();
+
+        if (random.nextDouble() * 100 > 60) {
+          hp += (random.nextDouble() * 30).floor();
+          kp += (random.nextDouble() * 30).floor();
+          pw += (random.nextDouble() * 30).floor();
+          df += (random.nextDouble() * 50).floor();
+        }
+
+        if (random.nextDouble() * 100 > 70) {
+          hp += (random.nextDouble() * 20).floor();
+          kp += (random.nextDouble() * 20).floor();
+          pw += (random.nextDouble() * 50).floor();
+          df += (random.nextDouble() * 50).floor();
+        }
+
+        if (random.nextDouble() * 100 > 50) {
+          strategies['突撃'] = true;
+        }
+        if (random.nextDouble() * 100 > 50) {
+          strategies['守備'] = true;
+        }
+        if (random.nextDouble() * 100 > 25 ||
+            !strategies['突撃']! && !strategies['守備']!) {
+          strategies['迎撃'] = true;
+        }
+        if (random.nextDouble() * 100 > 97) {
+          strategies['乱戦'] = true;
+        }
+        if (random.nextDouble() * 100 > 97) {
+          strategies['待機'] = true;
+        }
+
+        break;
+      case '猛者':
+        action = '旋風';
+        if (random.nextDouble() * 100 > 75) {
+          action = '無双';
+        }
+        if (random.nextDouble() * 500 > 498) {
+          action = '鬼神';
+        }
+        spd = (random.nextDouble() * 3).floor() + 2;
+        hp = 45 + (random.nextDouble() * 15).floor();
+        kp = 30 + (random.nextDouble() * 20).floor();
+        pw = 65 + (random.nextDouble() * 15).floor();
+        df = 30 + (random.nextDouble() * 20).floor();
+        if (random.nextDouble() * 100 > 60) {
+          hp += (random.nextDouble() * 30).floor();
+          kp += (random.nextDouble() * 30).floor();
+          pw += (random.nextDouble() * 30).floor();
+          df += (random.nextDouble() * 30).floor();
+          if (random.nextDouble() * 100 > 70) {
+            hp += (random.nextDouble() * 20).floor();
+            kp += (random.nextDouble() * 20).floor();
+            pw += (random.nextDouble() * 20).floor();
+            df += (random.nextDouble() * 20).floor();
+          }
+        }
+
+        if (random.nextDouble() * 400 > 395) {
+          strategies['突撃'] = true;
+        }
+        if (random.nextDouble() * 400 > 396) {
+          strategies['守備'] = true;
+        }
+        if (random.nextDouble() * 400 > 396) {
+          strategies['迎撃'] = true;
+        }
+        strategies['乱戦'] = true;
+        break;
+      case '軍師':
+        action = random.nextBool() ? '火遊' : '火攻';
+        // 3%で虚報
+        if (random.nextDouble() * 100 > 97) {
+          action = '虚報';
+        }
+        // 1%(300>297)で妖術
+        if (random.nextDouble() * 300 > 297) {
+          action = '妖術';
+        }
+        spd = (random.nextDouble() * 2).floor() + 2;
+        hp = 20 + (random.nextDouble() * 15).floor();
+        kp = 30 + (random.nextDouble() * 20).floor();
+        pw = 10 + (random.nextDouble() * 10).floor();
+        df = 30 + (random.nextDouble() * 20).floor();
+        if (random.nextDouble() * 100 > 60) {
+          pw += (random.nextDouble() * 20).floor();
+          hp += (random.nextDouble() * 10).floor();
+          df += (random.nextDouble() * 30).floor();
+          kp += (random.nextDouble() * 30).floor();
+          if (random.nextDouble() * 100 > 85) {
+            action = switch (random.nextDouble() * 3) {
+              >= 2 => '火遊',
+              >= 1 => '火攻',
+              _ => '火計',
+            };
+            if (random.nextDouble() * 100 > 85) {
+              action = switch (random.nextDouble() * 4) {
+                >= 3 => '火遊',
+                >= 2 => '火攻',
+                >= 1 => '火計',
+                _ => '業火',
+              };
+              hp += (random.nextDouble() * 35).floor();
+              // 1798/1800
+              if (random.nextDouble() * 1800 > 1798) {
+                action = '治癒';
+              }
+              // 1398/1400
+              if (random.nextDouble() * 1400 > 1398) {
+                action = '炎術';
+              }
+            }
+            pw += (random.nextDouble() * 40).floor();
+            hp += (random.nextDouble() * 20).floor();
+            df += (random.nextDouble() * 50).floor();
+            kp += (random.nextDouble() * 80).floor();
+          }
+        }
+
+        if (random.nextDouble() * 100 > 50) {
+          strategies['突撃'] = true;
+        }
+        if (random.nextDouble() * 100 > 50) {
+          strategies['守備'] = true;
+        }
+        if (random.nextDouble() * 100 > 50) {
+          strategies['迎撃'] = true;
+        }
+        if (random.nextDouble() * 100 > 50) {
+          strategies['乱戦'] = true;
+        }
+        if (random.nextDouble() * 100 > 50) {
+          strategies['待機'] = true;
+        }
+        break;
+
+      case '鉄砲':
+        action = random.nextDouble() * 300 > 298 ? '砲撃' : '射撃';
+        spd = (random.nextDouble() * 2).floor() + 1;
+
+        hp = 20 + (random.nextDouble() * 20).floor();
+        kp = 30 + (random.nextDouble() * 20).floor();
+        pw = 10 + (random.nextDouble() * 10).floor();
+        df = 20 + (random.nextDouble() * 20).floor();
+
+        if (random.nextDouble() * 100 > 60) {
+          action = random.nextBool() ? '射撃' : '狙撃';
+          hp += (random.nextDouble() * 10).floor();
+          kp += (random.nextDouble() * 30).floor();
+          pw += (random.nextDouble() * 20).floor();
+          df += (random.nextDouble() * 30).floor();
+
+          if (random.nextDouble() * 100 > 90) {
+            hp += (random.nextDouble() * 15).floor();
+            kp += (random.nextDouble() * 20).floor();
+            pw += (random.nextDouble() * 20).floor();
+            df += (random.nextDouble() * 20).floor();
+
+            if (random.nextDouble() * 100 > 95) {
+              hp += (random.nextDouble() * 30).floor();
+            }
+          }
+        }
+
+        if (random.nextDouble() * 100 > 90) {
+          strategies['突撃'] = true;
+        }
+        if (random.nextDouble() * 100 > 90) {
+          strategies['守備'] = true;
+        }
+        if (random.nextDouble() * 100 > 80) {
+          strategies['迎撃'] = true;
+        }
+        if (random.nextDouble() * 100 > 97) {
+          strategies['乱戦'] = true;
+        }
+        strategies['待機'] = true;
+
+        break;
+
+      case '忍者':
+        action = '忍術';
+        if (random.nextDouble() * 100 > 87) {
+          action = '影走';
+        }
+        if (random.nextDouble() * 200 > 198) {
+          action = '幻術';
+        }
+        if (random.nextDouble() * 200 > 198) {
+          action = '結界';
+        }
+        spd = (random.nextDouble() * 2).floor() + 4;
+        hp = 15 + (random.nextDouble() * 5).floor();
+        kp = 30 + (random.nextDouble() * 20).floor();
+        pw = 65 + (random.nextDouble() * 15).floor();
+        df = 65 + (random.nextDouble() * 15).floor();
+        if (random.nextDouble() * 100 > 60) {
+          hp += (random.nextDouble() * 15).floor();
+          kp += (random.nextDouble() * 30).floor();
+          pw += (random.nextDouble() * 20).floor();
+          df += (random.nextDouble() * 30).floor();
+          if (random.nextDouble() * 100 > 70) {
+            hp += (random.nextDouble() * 15).floor();
+            kp += (random.nextDouble() * 20).floor();
+            pw += (random.nextDouble() * 20).floor();
+            df += (random.nextDouble() * 20).floor();
+          }
+        }
+
+        strategies['突撃'] = true;
+        if (random.nextDouble() * 400 > 398) {
+          strategies['守備'] = true;
+        }
+        if (random.nextDouble() * 400 > 398) {
+          strategies['迎撃'] = true;
+        }
+        if (random.nextDouble() * 400 > 398) {
+          strategies['乱戦'] = true;
+        }
+        break;
+
+      case '騎馬':
+        action = '騎突';
+        spd = (random.nextDouble() * 2).floor() + 5;
+
+        hp = 50 + (random.nextDouble() * 5).floor();
+        kp = 55 + (random.nextDouble() * 10).floor();
+        pw = 85 + (random.nextDouble() * 20).floor();
+        df = 15 + (random.nextDouble() * 5).floor();
+
+        if (random.nextDouble() * 100 > 60) {
+          hp += (random.nextDouble() * 20).floor();
+          kp += (random.nextDouble() * 20).floor();
+          pw += (random.nextDouble() * 20).floor();
+          df += (random.nextDouble() * 10).floor();
+
+          if (random.nextDouble() * 100 > 70) {
+            hp += (random.nextDouble() * 5).floor();
+            kp += (random.nextDouble() * 10).floor();
+            pw += (random.nextDouble() * 40).floor();
+
+            if (random.nextDouble() * 100 > 70) {
+              hp += (random.nextDouble() * 10).floor();
+              kp += (random.nextDouble() * 20).floor();
+              df += (random.nextDouble() * 10).floor();
+            }
+          }
+        }
+        strategies['突撃'] = true;
+        if (random.nextDouble() * 400 > 398) {
+          strategies['迎撃'] = true;
+        }
+        if (random.nextDouble() * 400 > 348) {
+          strategies['乱戦'] = true;
+        }
+        break;
+    }
+
+    if (character != '騎馬') {
+      if (pw > 110) {
+        pw = 110;
+      }
+    } else {
+      if (pw > 125) {
+        pw = 125;
+      }
+    }
+
+    if (df > 110) {
+      df = 110;
+    }
+
+    if (kp > 110) {
+      kp = 110;
+    }
+
+    if (hp > 110) {
+      hp = 110;
+    }
+
+    if (character == '騎馬' && hp > 90) {
+      hp = 80 + (random.nextDouble() * 15).floor();
+    }
 
     final abilities = <String, bool>{
       '突進': false,
@@ -107,22 +511,35 @@ class SoldierNotifier extends _$SoldierNotifier {
         abilities[key] = random.nextDouble() * 100 > 95;
         return;
       }
-      if (key == '火遁' || key == '忍狩' || key == '猛退' || key == '陣頭') {
+      if (key == '忍狩' && character == '猛者') {
+        abilities[key] = random.nextDouble() * 100 > 85;
         return;
       }
-      abilities[key] = random.nextDouble() * 100 > 80;
+      if (key == '火遁' && character == '忍者') {
+        abilities[key] = random.nextDouble() * 100 > 80;
+        return;
+      }
+      if (key == '猛退' && character == '騎馬') {
+        abilities[key] = true;
+        return;
+      }
+      if (key == '陣頭' && character == '騎馬') {
+        abilities[key] = random.nextDouble() * 100 > 90;
+        return;
+      }
+      abilities[key] = random.nextDouble() * 100 > 75;
     });
 
     final newSoldier = Soldier(
       name: '弁慶',
       rokudaka: 0,
-      character: '足軽',
+      character: character,
       action: action,
-      hp: random.nextInt(110) + 1,
-      kp: random.nextInt(110) + 1,
-      pw: random.nextInt(110) + 1,
-      df: random.nextInt(110) + 1,
-      spd: random.nextInt(3) + 2,
+      hp: hp,
+      kp: kp,
+      pw: pw,
+      df: df,
+      spd: spd,
       growth: 9,
       abilities: abilities,
       strategies: strategies,
