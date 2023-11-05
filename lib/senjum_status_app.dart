@@ -357,8 +357,6 @@ class SenjumStatusApp extends ConsumerWidget {
   }
 
   Widget buildStrategies(Soldier soldier) {
-    final keys = soldier.strategies.keys;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -376,11 +374,11 @@ class SenjumStatusApp extends ConsumerWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    for (int i = 0; i < 5; i++) ...{
-                      soldier.strategies[keys.elementAt(i)]!
-                          ? buildAbility(keys.elementAt(i),
-                              const Color.fromARGB(255, 170, 126, 50))
-                          : buildAbility(keys.elementAt(i), Colors.black),
+                    for (String key in soldier.strategies.keys) ...{
+                      soldier.strategies[key]!
+                          ? buildAbility(
+                              key, const Color.fromARGB(255, 170, 126, 50))
+                          : buildAbility(key, Colors.black),
                     },
                     buildAbility('？？', Colors.black),
                   ],
