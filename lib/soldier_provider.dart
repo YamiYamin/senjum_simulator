@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:senjum_status/soldier.dart';
-import 'package:senjum_status/stage_lv_provider.dart';
+import 'package:senjum_simulator/soldier.dart';
+import 'package:senjum_simulator/stage_lv_provider.dart';
 
 part 'soldier_provider.g.dart';
 

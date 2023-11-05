@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:senjum_status/senjum_status_app.dart';
-import 'package:senjum_status/stage_lv_provider.dart';
+import 'package:senjum_simulator/status_page.dart';
+import 'package:senjum_simulator/stage_lv_provider.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -37,7 +37,7 @@ class StageSelectionPage extends HookConsumerWidget {
       onPressed: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => const SenjumStatusApp(),
+            builder: (context) => const StatusPage(),
           ),
         );
       },
@@ -49,6 +49,7 @@ class StageSelectionPage extends HookConsumerWidget {
       ),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             dropDown,
             button,

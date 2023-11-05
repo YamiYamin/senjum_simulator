@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:senjum_status/soldier.dart';
+import 'package:senjum_simulator/soldier.dart';
 
 import 'soldier_provider.dart';
 
-class SenjumStatusApp extends ConsumerWidget {
-  const SenjumStatusApp({super.key});
+class StatusPage extends ConsumerWidget {
+  const StatusPage({super.key});
 
   void growButtonPressed(WidgetRef ref) {
     final notifier = ref.read(soldierNotifierProvider.notifier);
@@ -545,7 +545,7 @@ class SenjumStatusApp extends ConsumerWidget {
 
     return Scaffold(
       body: Container(
-        color: Colors.black,
+        color: const Color.fromARGB(255, 40, 40, 40),
         child: Column(
           children: [
             soldierContainer,
