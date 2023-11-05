@@ -555,35 +555,168 @@ class SoldierNotifier extends _$SoldierNotifier {
       return;
     }
 
-    int newHp = state.hp;
-    int newKp = state.kp;
-    int newPw = state.pw;
-    int newDf = state.df;
-    int newS = state.spd;
+    int hp = state.hp;
+    int kp = state.kp;
+    int pw = state.pw;
+    int df = state.df;
+    int spd = state.spd;
 
-    switch (random.nextInt(4)) {
-      case 0:
-        newHp += random.nextInt(3) + 1;
+    Map<String, bool> abilities = Map.from(state.abilities);
+    Map<String, bool> strategies = Map.from(state.strategies);
+
+    if (random.nextDouble() * 100 > 8) {
+      int loopCount = 0;
+      int increase = 0;
+      while (true) {
+        // 51周しても成長できない場合防御を1上げる
+        if (loopCount > 50) {
+          df += 1;
+          if (df > 125) {
+            df = 125;
+          }
+          break;
+        }
+        // ステータス上昇量の決定
+        if (random.nextDouble() * 100 > 75) {
+          if (random.nextDouble() * 100 > 90) {
+            increase = 3;
+          } else {
+            increase = 2;
+          }
+        } else {
+          increase = 1;
+        }
+        // ステータスを上昇させる（無理ならcontinue）
+        switch (random.nextInt(4)) {
+          case 0:
+            if (hp + increase > 125) {
+              loopCount++;
+              continue;
+            }
+            hp += increase;
+            break;
+          case 1:
+            if (kp + increase > 125) {
+              loopCount++;
+              continue;
+            }
+            kp += increase;
+            break;
+          case 2:
+            if (pw + increase > 125) {
+              loopCount++;
+              continue;
+            }
+            pw += increase;
+            break;
+          case 3:
+            if (df + increase > 125) {
+              loopCount++;
+              continue;
+            }
+            df += increase;
+            break;
+        }
         break;
-      case 1:
-        newKp += random.nextInt(3) + 1;
-        break;
-      case 2:
-        newPw += random.nextInt(3) + 1;
-        break;
-      case 3:
-        newDf += random.nextInt(3) + 1;
-        break;
-      default:
+      }
+    } else {
+      // 更に90%で星以外の特殊能力が付く
+      if (random.nextDouble() * 100 > 10) {
+        int loopCount = 0;
+        while (true) {
+          if (loopCount > 50) {
+            df += 1;
+            if (df > 125) {
+              df = 125;
+            }
+            break;
+          }
+          int ss = (random.nextDouble() * 16).floor();
+          String key = abilities.keys.elementAt(ss);
+          if (key == '膂力' ||
+              key == '連発' ||
+              key == '討取' ||
+              key == '鼓舞' ||
+              key == '奮起') {
+            loopCount++;
+            continue;
+          }
+          if (!abilities[key]!) {
+            abilities[key] = true;
+            break;
+          } else {
+            loopCount++;
+            continue;
+          }
+        }
+        // 更に10%で星か作戦行動が付く
+      } else {
+        int loopCount = 0;
+        while (true) {
+          if (loopCount > 50) {
+            df += 1;
+            if (df > 125) {
+              df = 125;
+            }
+            break;
+          }
+          int index = (random.nextDouble() * 9).floor();
+          switch (index) {
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+              String key = strategies.keys.elementAt(index);
+              if (!strategies[key]!) {
+                strategies[key] = true;
+              } else {
+                loopCount++;
+                continue;
+              }
+            case 5:
+              if (!abilities['膂力']!) {
+                abilities['膂力'] = true;
+              } else {
+                loopCount++;
+                continue;
+              }
+            case 6:
+              if (!abilities['連発']!) {
+                abilities['連発'] = true;
+              } else {
+                loopCount++;
+                continue;
+              }
+            case 7:
+              if (!abilities['鼓舞']!) {
+                abilities['鼓舞'] = true;
+              } else {
+                loopCount++;
+                continue;
+              }
+            case 8:
+              if (spd < 6) {
+                spd++;
+              } else {
+                loopCount++;
+                continue;
+              }
+          }
+          break;
+        }
+      }
     }
 
     Soldier newSoldier = state.copyWith(
-      hp: newHp,
-      kp: newKp,
-      pw: newPw,
-      df: newDf,
-      spd: newS,
+      hp: hp,
+      kp: kp,
+      pw: pw,
+      df: df,
+      spd: spd,
       growth: state.growth - 1,
+      abilities: abilities,
+      strategies: strategies,
     );
     state = newSoldier;
     updateRokudaka(newSoldier);
