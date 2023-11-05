@@ -6,7 +6,7 @@ part of 'soldier_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$soldierNotifierHash() => r'a91c8e0dbd73d35dc588d225bb02a7b65a0c4361';
+String _$soldierNotifierHash() => r'54603437c574b2ad00d3794202bbb2feffcd8361';
 
 /// See also [SoldierNotifier].
 @ProviderFor(SoldierNotifier)

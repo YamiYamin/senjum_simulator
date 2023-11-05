@@ -6,7 +6,7 @@ part 'stage_lv_provider.g.dart';
 class StageLvNotifier extends _$StageLvNotifier {
   @override
   int build() {
-    return 0;
+    return 7;
   }
 
   void updateState(int newState) {
