@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:senjum_status/soldier.dart';
+import 'package:senjum_status/stage_lv_provider.dart';
 
 part 'soldier_provider.g.dart';
 
@@ -451,6 +452,17 @@ class SoldierNotifier extends _$SoldierNotifier {
           strategies['乱戦'] = true;
         }
         break;
+    }
+
+    final stageLv = ref.read(stageLvNotifierProvider);
+    final enemyLv = stageLv * 5 - 10;
+
+    kp += enemyLv;
+    pw += enemyLv;
+    df += enemyLv;
+
+    if (character != '忍者') {
+      hp += enemyLv;
     }
 
     if (character != '騎馬') {

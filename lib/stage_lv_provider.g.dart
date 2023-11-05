@@ -1,26 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'soldier_provider.dart';
+part of 'stage_lv_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$soldierNotifierHash() => r'a91c8e0dbd73d35dc588d225bb02a7b65a0c4361';
+String _$stageLvNotifierHash() => r'0bf522be37f2fcc82ddb2e96cd4d89ea28f87300';
 
-/// See also [SoldierNotifier].
-@ProviderFor(SoldierNotifier)
-final soldierNotifierProvider =
-    AutoDisposeNotifierProvider<SoldierNotifier, Soldier>.internal(
-  SoldierNotifier.new,
-  name: r'soldierNotifierProvider',
+/// See also [StageLvNotifier].
+@ProviderFor(StageLvNotifier)
+final stageLvNotifierProvider =
+    AutoDisposeNotifierProvider<StageLvNotifier, int>.internal(
+  StageLvNotifier.new,
+  name: r'stageLvNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$soldierNotifierHash,
+      : _$stageLvNotifierHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$SoldierNotifier = AutoDisposeNotifier<Soldier>;
+typedef _$StageLvNotifier = AutoDisposeNotifier<int>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
