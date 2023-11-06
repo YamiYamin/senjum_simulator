@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:senjum_simulator/soldier.dart';
+import 'package:senjum_simulator/soldier_logic.dart';
+import 'package:senjum_simulator/stage_lv_provider.dart';
 
 import 'soldier_provider.dart';
 
@@ -8,8 +10,10 @@ class StatusPage extends ConsumerWidget {
   const StatusPage({super.key});
 
   void growButtonPressed(WidgetRef ref) {
-    final notifier = ref.read(soldierNotifierProvider.notifier);
-    notifier.grow();
+    final soldier = ref.read(soldierNotifierProvider);
+    ref
+        .read(soldierNotifierProvider.notifier)
+        .updateState(SoldierLogic.grow(soldier));
   }
 
   void initializeButtonPressed(WidgetRef ref) {
@@ -18,8 +22,11 @@ class StatusPage extends ConsumerWidget {
   }
 
   void randomButtonPressed(WidgetRef ref) {
-    final notifier = ref.read(soldierNotifierProvider.notifier);
-    notifier.generateRandom();
+    final stageLv = ref.read(stageLvNotifierProvider);
+    final soldier = ref.read(soldierNotifierProvider);
+    ref
+        .read(soldierNotifierProvider.notifier)
+        .updateState(SoldierLogic.determineCapabilities(soldier, stageLv));
   }
 
   Widget buildHp(Soldier soldier) {
@@ -544,6 +551,7 @@ class StatusPage extends ConsumerWidget {
     );
 
     return Scaffold(
+      appBar: AppBar(),
       body: Container(
         color: const Color.fromARGB(255, 40, 40, 40),
         child: Column(

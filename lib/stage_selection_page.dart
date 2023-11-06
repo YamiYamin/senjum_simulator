@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:senjum_simulator/soldier.dart';
 import 'package:senjum_simulator/soldier_list_page.dart';
+import 'package:senjum_simulator/soldier_logic.dart';
 import 'package:senjum_simulator/soldier_provider.dart';
 import 'package:senjum_simulator/soldiers_provider.dart';
 import 'package:senjum_simulator/stage_name_provider.dart';
@@ -13,16 +14,18 @@ class StageSelectionPage extends HookConsumerWidget {
   const StageSelectionPage({super.key});
 
   void startButtonOnPressed(BuildContext context, WidgetRef ref) {
-    // final stageLv = ref.read(stageLvNotifierProvider);
+    final stageLv = ref.read(stageLvNotifierProvider);
     // final stageName = ref.read(stageNameNotifierProvider);
     final soldierNotifier = SoldierNotifier();
 
     final soldiers = <Soldier>[];
     for (int i = 0; i < 30; i++) {
-      soldiers.add(soldierNotifier.build());
+      var soldier = soldierNotifier.build();
+      soldier = SoldierLogic.determineCapabilities(soldier, stageLv);
+      soldiers.add(soldier);
     }
     ref.read(soldiersNotifierProvider.notifier).updateState(soldiers);
-
+    
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const SoldierListPage(),
