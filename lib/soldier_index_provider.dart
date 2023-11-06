@@ -8,4 +8,8 @@ class SoldierIndexNotifier extends _$SoldierIndexNotifier {
   int build() {
     return 0;
   }
+
+  void updateState(int newState) {
+    state = newState;
+  }
 }

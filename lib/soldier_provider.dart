@@ -808,4 +808,8 @@ class SoldierNotifier extends _$SoldierNotifier {
   void initializeSoldier() {
     state = build();
   }
+
+  void updateState(Soldier soldier) {
+    state = soldier.copyWith();
+  }
 }
