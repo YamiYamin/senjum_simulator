@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:senjum_simulator/soldier.dart';
+import 'package:senjum_simulator/soldier_list_page.dart';
+import 'package:senjum_simulator/soldier_provider.dart';
+import 'package:senjum_simulator/soldiers_provider.dart';
 import 'package:senjum_simulator/stage_name_provider.dart';
 import 'package:senjum_simulator/status_page.dart';
 import 'package:senjum_simulator/stage_lv_provider.dart';
@@ -7,6 +11,24 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class StageSelectionPage extends HookConsumerWidget {
   const StageSelectionPage({super.key});
+
+  void startButtonOnPressed(BuildContext context, WidgetRef ref) {
+    // final stageLv = ref.read(stageLvNotifierProvider);
+    // final stageName = ref.read(stageNameNotifierProvider);
+    final soldierNotifier = SoldierNotifier();
+
+    final soldiers = <Soldier>[];
+    for (int i = 0; i < 30; i++) {
+      soldiers.add(soldierNotifier.build());
+    }
+    ref.read(soldiersNotifierProvider.notifier).updateState(soldiers);
+
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const SoldierListPage(),
+      ),
+    );
+  }
 
   List<DropdownMenuEntry<int>> getStageLevelMenus(String stageName) {
     if (stageName == '裏戦国') {
@@ -35,26 +57,14 @@ class StageSelectionPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final stageLv = ref.watch(stageLvNotifierProvider);
     final stageName = ref.watch(stageNameNotifierProvider);
+    final stageLv = ref.watch(stageLvNotifierProvider);
+    ref.watch(soldiersNotifierProvider);
 
     final stageNameController = useTextEditingController();
     final stageLvController = useTextEditingController();
 
     final stageLevels = useState(getStageLevelMenus(stageName));
-
-    final stageLvDropDown = DropdownMenu<int>(
-      initialSelection: stageLv,
-      controller: stageLvController,
-      width: 150,
-      label: const Text('ステージLv'),
-      onSelected: (value) {
-        if (value != null) {
-          ref.read(stageLvNotifierProvider.notifier).updateState(value);
-        }
-      },
-      dropdownMenuEntries: stageLevels.value,
-    );
 
     final stageNameDropDown = DropdownMenu<String>(
       initialSelection: stageName,
@@ -79,15 +89,20 @@ class StageSelectionPage extends HookConsumerWidget {
       },
     );
 
-    final button = ElevatedButton(
-      child: const Text('開始'),
-      onPressed: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const StatusPage(),
-          ),
-        );
+    final stageLvDropDown = DropdownMenu<int>(
+      initialSelection: stageLv,
+      controller: stageLvController,
+      width: 150,
+      label: const Text('ステージLv'),
+      onSelected: (value) {
+        ref.read(stageLvNotifierProvider.notifier).updateState(value!);
       },
+      dropdownMenuEntries: stageLevels.value,
+    );
+
+    final startButton = ElevatedButton(
+      child: const Text('開始'),
+      onPressed: () => startButtonOnPressed(context, ref),
     );
 
     return Scaffold(
@@ -105,7 +120,7 @@ class StageSelectionPage extends HookConsumerWidget {
                 stageLvDropDown,
               ],
             ),
-            button,
+            startButton,
           ],
         ),
       ),
