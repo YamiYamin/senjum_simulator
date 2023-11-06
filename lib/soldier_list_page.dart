@@ -35,8 +35,12 @@ class SoldierListPage extends ConsumerWidget {
       itemBuilder: (context, i) {
         return ListTile(
           title: Text(soldiers[i].name),
-          subtitle:
-              Text('兵種：${soldiers[i].character}　技種：${soldiers[i].action}'),
+          subtitle: Text(
+            '${soldiers[i].character} ${soldiers[i].action} '
+            '体力${soldiers[i].hp} 技量${soldiers[i].kp} '
+            '戦闘${soldiers[i].pw} 防御${soldiers[i].df} '
+            '脚力${soldiers[i].spd}',
+          ),
           onTap: () => soldierListTileOnTap(context, ref, i, soldiers[i]),
         );
       },
