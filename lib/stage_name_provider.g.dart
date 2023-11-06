@@ -6,7 +6,7 @@ part of 'stage_name_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$stageNameNotifierHash() => r'95b1ad17704d708027264d3a164e5da04af44bc3';
+String _$stageNameNotifierHash() => r'3d78071b32952e22b81a7be8b6f606c9aa2065a6';
 
 /// See also [StageNameNotifier].
 @ProviderFor(StageNameNotifier)
