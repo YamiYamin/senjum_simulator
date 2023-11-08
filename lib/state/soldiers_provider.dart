@@ -1,5 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:senjum_simulator/soldier.dart';
+import 'package:senjum_simulator/domain/entities/soldier.dart';
 
 part 'soldiers_provider.g.dart';
 

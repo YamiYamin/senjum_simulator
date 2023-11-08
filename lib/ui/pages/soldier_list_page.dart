@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:senjum_simulator/soldier.dart';
-import 'package:senjum_simulator/soldier_index_provider.dart';
-import 'package:senjum_simulator/soldier_provider.dart';
-import 'package:senjum_simulator/soldiers_provider.dart';
-import 'package:senjum_simulator/stage_lv_provider.dart';
-import 'package:senjum_simulator/stage_name_provider.dart';
-import 'package:senjum_simulator/status_page.dart';
+import 'package:senjum_simulator/domain/entities/soldier.dart';
+import 'package:senjum_simulator/state/soldier_index_provider.dart';
+import 'package:senjum_simulator/state/soldier_provider.dart';
+import 'package:senjum_simulator/state/soldiers_provider.dart';
+import 'package:senjum_simulator/ui/pages/status_page.dart';
 
 class SoldierListPage extends ConsumerWidget {
   const SoldierListPage({super.key});

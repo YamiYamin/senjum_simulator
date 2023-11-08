@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:senjum_simulator/soldier.dart';
+import 'package:senjum_simulator/domain/entities/soldier.dart';
 
 class SoldierLogic {
   static final random = Random();

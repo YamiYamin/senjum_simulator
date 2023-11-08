@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:senjum_simulator/soldier.dart';
-import 'package:senjum_simulator/soldier_list_page.dart';
-import 'package:senjum_simulator/soldier_logic.dart';
-import 'package:senjum_simulator/soldier_provider.dart';
-import 'package:senjum_simulator/soldiers_provider.dart';
-import 'package:senjum_simulator/stage_name_provider.dart';
-import 'package:senjum_simulator/status_page.dart';
-import 'package:senjum_simulator/stage_lv_provider.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:senjum_simulator/domain/entities/soldier.dart';
+import 'package:senjum_simulator/domain/features/soldier_logic.dart';
+import 'package:senjum_simulator/state/soldier_provider.dart';
+import 'package:senjum_simulator/state/soldiers_provider.dart';
+import 'package:senjum_simulator/state/stage_name_provider.dart';
+import 'package:senjum_simulator/state/stage_lv_provider.dart';
+import 'package:senjum_simulator/ui/pages/soldier_list_page.dart';
 
 class StageSelectionPage extends HookConsumerWidget {
   const StageSelectionPage({super.key});
@@ -25,8 +24,9 @@ class StageSelectionPage extends HookConsumerWidget {
       soldiers.add(soldier);
     }
     ref.read(soldiersNotifierProvider.notifier).updateState(soldiers);
-    
-    Navigator.of(context).push(
+
+    Navigator.push(
+      context,
       MaterialPageRoute(
         builder: (context) => const SoldierListPage(),
       ),

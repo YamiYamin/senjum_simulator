@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:senjum_simulator/soldier.dart';
-import 'package:senjum_simulator/soldier_logic.dart';
-import 'package:senjum_simulator/stage_lv_provider.dart';
-
-import 'soldier_provider.dart';
+import 'package:senjum_simulator/domain/entities/soldier.dart';
+import 'package:senjum_simulator/domain/features/soldier_logic.dart';
+import 'package:senjum_simulator/state/stage_lv_provider.dart';
+import 'package:senjum_simulator/state/soldier_provider.dart';
 
 class StatusPage extends ConsumerWidget {
   const StatusPage({super.key});
