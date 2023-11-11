@@ -14,16 +14,26 @@ class StageSelectionPage extends HookConsumerWidget {
 
   void startButtonOnPressed(BuildContext context, WidgetRef ref) {
     final stageLv = ref.read(stageLvNotifierProvider);
-    // final stageName = ref.read(stageNameNotifierProvider);
+    final stageName = ref.read(stageNameNotifierProvider);
     final soldierNotifier = SoldierNotifier();
 
+    // 初期状態の兵を生成
     final soldiers = <Soldier>[];
     for (int i = 0; i < 30; i++) {
       var soldier = soldierNotifier.build();
-      soldier = SoldierLogic.determineCapabilities(soldier, stageLv);
       soldiers.add(soldier);
     }
-    ref.read(soldiersNotifierProvider.notifier).updateState(soldiers);
+    // 兵に兵種を設定
+    List<Soldier> characteredSoldiers =
+        SoldierLogic.determineCharacter(soldiers, stageName, stageLv);
+    // 兵に全ての能力を設定
+    final determinedSoldiers = <Soldier>[];
+    for (final soldier in characteredSoldiers) {
+      determinedSoldiers
+          .add(SoldierLogic.determineCapabilities(soldier, stageLv));
+    }
+    
+    ref.read(soldiersNotifierProvider.notifier).updateState(determinedSoldiers);
 
     Navigator.push(
       context,

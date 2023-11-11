@@ -14,8 +14,8 @@ class SoldierNotifier extends _$SoldierNotifier {
     return const Soldier(
       name: '弁慶',
       rokudaka: 0,
-      character: '足軽',
-      action: '槍術',
+      character: '',
+      action: '',
       hp: 0,
       kp: 0,
       pw: 0,
