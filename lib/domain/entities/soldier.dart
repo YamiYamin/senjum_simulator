@@ -16,6 +16,7 @@ class Soldier with _$Soldier {
     required int spd,
     required int growth,
     required Map<String, bool> strategies,
+    required String currentStrategy,
     required Map<String, bool> abilities,
   }) = _Soldier;
 }

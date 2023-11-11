@@ -7,7 +7,7 @@ part of 'soldier_index_provider.dart';
 // **************************************************************************
 
 String _$soldierIndexNotifierHash() =>
-    r'6e95a725f0f3e5bdbf351e4b7d17beddf0aff437';
+    r'a86fd0d761b911a958d51e10ae7a1ee2aadcf7fb';
 
 /// See also [SoldierIndexNotifier].
 @ProviderFor(SoldierIndexNotifier)

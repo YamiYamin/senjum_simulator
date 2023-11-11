@@ -27,6 +27,7 @@ mixin _$Soldier {
   int get spd => throw _privateConstructorUsedError;
   int get growth => throw _privateConstructorUsedError;
   Map<String, bool> get strategies => throw _privateConstructorUsedError;
+  String get currentStrategy => throw _privateConstructorUsedError;
   Map<String, bool> get abilities => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -50,6 +51,7 @@ abstract class $SoldierCopyWith<$Res> {
       int spd,
       int growth,
       Map<String, bool> strategies,
+      String currentStrategy,
       Map<String, bool> abilities});
 }
 
@@ -77,6 +79,7 @@ class _$SoldierCopyWithImpl<$Res, $Val extends Soldier>
     Object? spd = null,
     Object? growth = null,
     Object? strategies = null,
+    Object? currentStrategy = null,
     Object? abilities = null,
   }) {
     return _then(_value.copyWith(
@@ -124,6 +127,10 @@ class _$SoldierCopyWithImpl<$Res, $Val extends Soldier>
           ? _value.strategies
           : strategies // ignore: cast_nullable_to_non_nullable
               as Map<String, bool>,
+      currentStrategy: null == currentStrategy
+          ? _value.currentStrategy
+          : currentStrategy // ignore: cast_nullable_to_non_nullable
+              as String,
       abilities: null == abilities
           ? _value.abilities
           : abilities // ignore: cast_nullable_to_non_nullable
@@ -151,6 +158,7 @@ abstract class _$$SoldierImplCopyWith<$Res> implements $SoldierCopyWith<$Res> {
       int spd,
       int growth,
       Map<String, bool> strategies,
+      String currentStrategy,
       Map<String, bool> abilities});
 }
 
@@ -176,6 +184,7 @@ class __$$SoldierImplCopyWithImpl<$Res>
     Object? spd = null,
     Object? growth = null,
     Object? strategies = null,
+    Object? currentStrategy = null,
     Object? abilities = null,
   }) {
     return _then(_$SoldierImpl(
@@ -223,6 +232,10 @@ class __$$SoldierImplCopyWithImpl<$Res>
           ? _value._strategies
           : strategies // ignore: cast_nullable_to_non_nullable
               as Map<String, bool>,
+      currentStrategy: null == currentStrategy
+          ? _value.currentStrategy
+          : currentStrategy // ignore: cast_nullable_to_non_nullable
+              as String,
       abilities: null == abilities
           ? _value._abilities
           : abilities // ignore: cast_nullable_to_non_nullable
@@ -246,6 +259,7 @@ class _$SoldierImpl implements _Soldier {
       required this.spd,
       required this.growth,
       required final Map<String, bool> strategies,
+      required this.currentStrategy,
       required final Map<String, bool> abilities})
       : _strategies = strategies,
         _abilities = abilities;
@@ -278,6 +292,8 @@ class _$SoldierImpl implements _Soldier {
     return EqualUnmodifiableMapView(_strategies);
   }
 
+  @override
+  final String currentStrategy;
   final Map<String, bool> _abilities;
   @override
   Map<String, bool> get abilities {
@@ -288,7 +304,7 @@ class _$SoldierImpl implements _Soldier {
 
   @override
   String toString() {
-    return 'Soldier(name: $name, rokudaka: $rokudaka, character: $character, action: $action, hp: $hp, kp: $kp, pw: $pw, df: $df, spd: $spd, growth: $growth, strategies: $strategies, abilities: $abilities)';
+    return 'Soldier(name: $name, rokudaka: $rokudaka, character: $character, action: $action, hp: $hp, kp: $kp, pw: $pw, df: $df, spd: $spd, growth: $growth, strategies: $strategies, currentStrategy: $currentStrategy, abilities: $abilities)';
   }
 
   @override
@@ -310,6 +326,8 @@ class _$SoldierImpl implements _Soldier {
             (identical(other.growth, growth) || other.growth == growth) &&
             const DeepCollectionEquality()
                 .equals(other._strategies, _strategies) &&
+            (identical(other.currentStrategy, currentStrategy) ||
+                other.currentStrategy == currentStrategy) &&
             const DeepCollectionEquality()
                 .equals(other._abilities, _abilities));
   }
@@ -328,6 +346,7 @@ class _$SoldierImpl implements _Soldier {
       spd,
       growth,
       const DeepCollectionEquality().hash(_strategies),
+      currentStrategy,
       const DeepCollectionEquality().hash(_abilities));
 
   @JsonKey(ignore: true)
@@ -350,6 +369,7 @@ abstract class _Soldier implements Soldier {
       required final int spd,
       required final int growth,
       required final Map<String, bool> strategies,
+      required final String currentStrategy,
       required final Map<String, bool> abilities}) = _$SoldierImpl;
 
   @override
@@ -374,6 +394,8 @@ abstract class _Soldier implements Soldier {
   int get growth;
   @override
   Map<String, bool> get strategies;
+  @override
+  String get currentStrategy;
   @override
   Map<String, bool> get abilities;
   @override

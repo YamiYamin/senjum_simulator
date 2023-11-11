@@ -38,11 +38,13 @@ class SoldierLogic {
       case '兵学舎':
         return switch (stageLv) {
           6 => '533858385313104364386464646413534364535358535843535343646453',
-          5 => '101653152038161678151238122123071513071710191940171518171718141624141523141723081413071613101023191340171418121923101223151158102123152158191140121223121023192140081813171818101923',
+          5 =>
+            '101653152038161678151238122123071513071710191940171518171718141624141523141723081413071613101023191340171418121923101223151158102123152158191140121223121023192140081813171818101923',
           // 5 => '131658121638211638221771221871221440221540211411201711211811201511201864201423141523071514081423081623081823121758091523071614121358121958200681091723141623141723121558071714202681',
           4 => '585858112311235858582323232311315831404058582371716464585840',
           3 => '585873135813581818236464641323382338181858585823232323581818',
-          2 => '111658181411181711071524122018071724121218191311191811201911141624141523141723081424081824171331201211171931141958191540161458121358161858190971192471171164172264121958141358191640',
+          2 =>
+            '111658181411181711071524122018071724121218191311191811201911141624141523141723081424081824171331201211171931141958191540161458121358161858190971192471171164172264121958141358191640',
           _ => '',
         };
       case '武家屋敷':
@@ -81,11 +83,19 @@ class SoldierLogic {
         _ => ''
       };
 
-      var currentStrategy = soldiersData[i + 1];
+      String currentStrategy = switch (soldiersData[i + 1]) {
+        '1' => '突撃',
+        '3' => '守備',
+        '8' => '迎撃',
+        '0' => '乱戦',
+        '4' => '待機',
+        _ => ''
+      };
 
       newSoldiers.add(
         soldier.copyWith(
           character: character,
+          currentStrategy: currentStrategy,
         ),
       );
 
@@ -140,19 +150,21 @@ class SoldierLogic {
           }
         }
 
-        if (random.nextDouble() * 100 > 50) {
+        if (random.nextDouble() * 100 > 50 || soldier.currentStrategy == '突撃') {
           strategies['突撃'] = true;
         }
-        if (random.nextDouble() * 100 > 50 || !strategies['突撃']!) {
+        if (random.nextDouble() * 100 > 50 ||
+            !strategies['突撃']! ||
+            soldier.currentStrategy == '守備') {
           strategies['守備'] = true;
         }
-        if (random.nextDouble() * 100 > 65) {
+        if (random.nextDouble() * 100 > 65 || soldier.currentStrategy == '迎撃') {
           strategies['迎撃'] = true;
         }
-        if (random.nextDouble() * 100 > 95) {
+        if (random.nextDouble() * 100 > 95 || soldier.currentStrategy == '乱戦') {
           strategies['乱戦'] = true;
         }
-        if (random.nextDouble() * 100 > 80) {
+        if (random.nextDouble() * 100 > 80 || soldier.currentStrategy == '待機') {
           strategies['待機'] = true;
         }
         break;
@@ -196,19 +208,23 @@ class SoldierLogic {
           }
         }
 
-        if (random.nextDouble() * 100 > 50) {
+        if (random.nextDouble() * 100 > 50 || soldier.currentStrategy == '突撃') {
           strategies['突撃'] = true;
         }
-        if (random.nextDouble() * 100 > 40 || !strategies['突撃']!) {
+        if (random.nextDouble() * 100 > 40 ||
+            !strategies['突撃']! ||
+            soldier.currentStrategy == '守備') {
           strategies['守備'] = true;
         }
-        if (random.nextDouble() * 100 > 65) {
+        if (random.nextDouble() * 100 > 65 || soldier.currentStrategy == '迎撃') {
           strategies['迎撃'] = true;
         }
-        if (random.nextDouble() * 100 > 95) {
+        if (random.nextDouble() * 100 > 95 || soldier.currentStrategy == '乱戦') {
           strategies['乱戦'] = true;
         }
-        if (random.nextDouble() * 100 > 30 || strategies['守備']!) {
+        if (random.nextDouble() * 100 > 30 ||
+            strategies['守備']! ||
+            soldier.currentStrategy == '待機') {
           strategies['待機'] = true;
         }
         break;
@@ -244,20 +260,21 @@ class SoldierLogic {
           df += (random.nextDouble() * 50).floor();
         }
 
-        if (random.nextDouble() * 100 > 50) {
+        if (random.nextDouble() * 100 > 50 || soldier.currentStrategy == '突撃') {
           strategies['突撃'] = true;
         }
-        if (random.nextDouble() * 100 > 50) {
+        if (random.nextDouble() * 100 > 50 || soldier.currentStrategy == '守備') {
           strategies['守備'] = true;
         }
         if (random.nextDouble() * 100 > 25 ||
-            !strategies['突撃']! && !strategies['守備']!) {
+            !strategies['突撃']! && !strategies['守備']! ||
+            soldier.currentStrategy == '迎撃') {
           strategies['迎撃'] = true;
         }
-        if (random.nextDouble() * 100 > 97) {
+        if (random.nextDouble() * 100 > 97 || soldier.currentStrategy == '乱戦') {
           strategies['乱戦'] = true;
         }
-        if (random.nextDouble() * 100 > 97) {
+        if (random.nextDouble() * 100 > 97 || soldier.currentStrategy == '待機') {
           strategies['待機'] = true;
         }
 
@@ -349,19 +366,19 @@ class SoldierLogic {
           }
         }
 
-        if (random.nextDouble() * 100 > 50) {
+        if (random.nextDouble() * 100 > 50 || soldier.currentStrategy == '突撃') {
           strategies['突撃'] = true;
         }
-        if (random.nextDouble() * 100 > 50) {
+        if (random.nextDouble() * 100 > 50 || soldier.currentStrategy == '守備') {
           strategies['守備'] = true;
         }
-        if (random.nextDouble() * 100 > 50) {
+        if (random.nextDouble() * 100 > 50 || soldier.currentStrategy == '迎撃') {
           strategies['迎撃'] = true;
         }
-        if (random.nextDouble() * 100 > 50) {
+        if (random.nextDouble() * 100 > 50 || soldier.currentStrategy == '乱戦') {
           strategies['乱戦'] = true;
         }
-        if (random.nextDouble() * 100 > 50) {
+        if (random.nextDouble() * 100 > 50 || soldier.currentStrategy == '待機') {
           strategies['待機'] = true;
         }
         break;
@@ -394,16 +411,16 @@ class SoldierLogic {
           }
         }
 
-        if (random.nextDouble() * 100 > 90) {
+        if (random.nextDouble() * 100 > 90 || soldier.currentStrategy == '突撃') {
           strategies['突撃'] = true;
         }
-        if (random.nextDouble() * 100 > 90) {
+        if (random.nextDouble() * 100 > 90 || soldier.currentStrategy == '守備') {
           strategies['守備'] = true;
         }
-        if (random.nextDouble() * 100 > 80) {
+        if (random.nextDouble() * 100 > 80 || soldier.currentStrategy == '迎撃') {
           strategies['迎撃'] = true;
         }
-        if (random.nextDouble() * 100 > 97) {
+        if (random.nextDouble() * 100 > 97 || soldier.currentStrategy == '乱戦') {
           strategies['乱戦'] = true;
         }
         strategies['待機'] = true;
@@ -446,7 +463,8 @@ class SoldierLogic {
         if (random.nextDouble() * 400 > 398) {
           strategies['迎撃'] = true;
         }
-        if (random.nextDouble() * 400 > 398) {
+        if (random.nextDouble() * 400 > 398 ||
+            soldier.currentStrategy == '乱戦') {
           strategies['乱戦'] = true;
         }
         break;
@@ -482,7 +500,8 @@ class SoldierLogic {
         if (random.nextDouble() * 400 > 398) {
           strategies['迎撃'] = true;
         }
-        if (random.nextDouble() * 400 > 348) {
+        if (random.nextDouble() * 400 > 348 ||
+            soldier.currentStrategy == '乱戦') {
           strategies['乱戦'] = true;
         }
         break;
@@ -587,6 +606,7 @@ class SoldierLogic {
       spd: spd,
       growth: 9,
       abilities: abilities,
+      currentStrategy: soldier.currentStrategy,
       strategies: strategies,
     );
 

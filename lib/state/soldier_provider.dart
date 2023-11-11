@@ -29,6 +29,7 @@ class SoldierNotifier extends _$SoldierNotifier {
         '乱戦': false,
         '待機': false,
       },
+      currentStrategy: '',
       abilities: {
         '突進': false,
         '攻略': false,
