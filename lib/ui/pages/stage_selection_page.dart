@@ -32,7 +32,7 @@ class StageSelectionPage extends HookConsumerWidget {
       determinedSoldiers
           .add(SoldierLogic.determineCapabilities(soldier, stageLv));
     }
-    
+
     ref.read(soldiersNotifierProvider.notifier).updateState(determinedSoldiers);
 
     Navigator.push(
@@ -46,6 +46,14 @@ class StageSelectionPage extends HookConsumerWidget {
   List<DropdownMenuEntry<int>> getStageLevelMenus(String stageName) {
     if (stageName == '裏戦国') {
       return [const DropdownMenuEntry(value: 10, label: 'Lv.X')];
+    }
+
+    if (stageName == '鉄砲鍛造所') {
+      return [
+        const DropdownMenuEntry(value: 6, label: 'Lv.6'),
+        const DropdownMenuEntry(value: 4, label: 'Lv.4'),
+        const DropdownMenuEntry(value: 3, label: 'Lv.3'),
+      ];
     }
     var stageLevelMenues = <DropdownMenuEntry<int>>[];
     if (stageName == '平地') {
